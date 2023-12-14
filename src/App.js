@@ -4,6 +4,7 @@ import Footer from './component/Footer';
 import RamenVote from './component/RamenVote';
 import Section from './component/Section';
 import Contact from './component/Contact';
+import ToDo from './component/Todo/ToDo';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <RamenVote />
       <Section />
       <Contact />
+      <ToDo />
       <Footer />
     </div>
   );

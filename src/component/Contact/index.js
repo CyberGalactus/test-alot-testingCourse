@@ -17,10 +17,8 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Skapa en mailto-länk
     const mailtoLink = `mailto:${formData.email}?subject=Kontaktformulär&body=${formData.message}`;
 
-    // Omdirigera till e-postklienten
     window.location.href = mailtoLink;
   };
 

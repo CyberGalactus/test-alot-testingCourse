@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Section from '../Section/index';
+import DisplayWinner from '../DisplayWinner';
 
 function RamenVote() {
   const [shoyuVote, setShoyuVote] = useState(0);
-  const [tokutsuVote, setTonkotsuVote] = useState(0);
+  const [tonkotsuVote, setTonkotsuVote] = useState(0);
   const [shioVote, setShioVote] = useState(0);
   const [misoVote, setMisoVote] = useState(0);
 
   const [winner, setWinner] = useState(null);
 
+  const votesForShoyu = [shoyuVote, tonkotsuVote, shioVote, misoVote]
+
   const handleClick = (soppa) => {
     if (soppa === 'Shoyu Ramen') {
       setShoyuVote(shoyuVote + 1);
-    } else if (soppa === 'Tokutsu Ramen') {
-      setTonkotsuVote(tokutsuVote + 1);
+    } else if (soppa === 'Tonkotsu Ramen') {
+      setTonkotsuVote(tonkotsuVote + 1);
     } else if (soppa === 'Shio Ramen') {
       setShioVote(shioVote + 1);
     } else if (soppa === 'Miso Ramen') {
@@ -23,12 +26,12 @@ function RamenVote() {
 
   useEffect(() => {
     calculateWinner();
-  }, [shoyuVote, tokutsuVote, shioVote, misoVote]);
+  }, [shoyuVote, tonkotsuVote, shioVote, misoVote]);
 
   const calculateWinner = () => {
     const voteCounts = {
       'Shoyu Ramen': shoyuVote,
-      'Tokutsu Ramen': tokutsuVote,
+      'Tonkotsu Ramen': tonkotsuVote,
       'Shio Ramen': shioVote,
       'Miso Ramen': misoVote,
     };
@@ -40,6 +43,7 @@ function RamenVote() {
       (key) => voteCounts[key] === maxVotes
     );
 
+     if (maxVotes !==0){
     if (winners.length === 1) {
       setWinner(`${winners[0]} has ${maxVotes} votes`);
     } else {
@@ -47,32 +51,36 @@ function RamenVote() {
         `it's a tie between ${winners.join(' and ')} with ${maxVotes}`
       );
     }
+  }
   };
 
-  const displayWinner = (winner) => {
-    if (winner) {
-      return (
-        <div>
-          <span>{winner}</span>
-        </div>
-      );
-    }
-    return
-  };
 
   return (
     <div>
-      {displayWinner(winner)}
+      {winner && <DisplayWinner winner = {winner} />}
       <div>
+        <p data-testid="">shoyuVote
+          {shoyuVote}
+        </p>
+        <p data-testid="">tonkotsuVote
+          {tonkotsuVote}
+        </p>
+        <p data-testid="">shioVote
+          {shioVote}
+        </p>
+        <p data-testid="">misoVote
+          {misoVote}
+        </p>
         <Section
           title="Shoyu Ramen"
           subtitle="Shoyu ramen features a clear, brown broth with a chicken or vegetable stock base and soy sauce"
           onclick={() => handleClick("Shoyu Ramen")}
+          
         />
         <Section
           title="Tonkotsu Ramen"
           subtitle="Tonkotsu ramen originated in Kurume, Fukuoka Prefecture, located on the northern shore of Kyushu island in Japan"
-          onclick={() => handleClick("Tokutsu Ramen")}
+          onclick={() => handleClick("Tonkotsu Ramen")}
         />
         <Section
           title="Miso Ramen"

@@ -1,5 +1,6 @@
 import {render, screen, fireEvent, getByRole} from '@testing-library/react';
 import Section from ".";
+import { click } from '@testing-library/user-event/dist/click';
 
 describe("render all title, subtitle, button and onclick", () =>{
     test ("renders the title and subtitle", () => {
@@ -40,10 +41,11 @@ describe("render all title, subtitle, button and onclick", () =>{
         test("Button onclick", () => {
         const mockOnClick = jest.fn();
 
-        render(<Section onClick={mockOnClick} />);
-        const button = screen.getByRole('button'); // <-- Här var det en liten felaktighet
-        fireEvent.click(button);
-
+        render(<Section onclick={mockOnClick} />);
+        const button = screen.getAllByRole('button'); // <-- Här var det en liten felaktighet
+        
+        fireEvent(button[0], new MouseEvent('click', {bubbles: true})); // ramenvote fire istället
+        
         expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
     
